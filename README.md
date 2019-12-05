@@ -1,3 +1,7 @@
+[![release](https://img.shields.io/npm/v/@futagoza/child-process.svg)](https://www.npmjs.com/package/@futagoza/child-process)
+[![History](https://img.shields.io/badge/%40futagoza%2Fchild--process-changelog-yellow)](https://github.com/futagoza/node-child-process/blob/master/CHANGELOG.md)
+[![license](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
+
 A set of functions based around `child_process.spawn()` that return Promises.
 
 The arguments are the same as `child_process.spawn()`, but if the second argument isn't an array, it will try `options.args` or `options.argv`; failing that, the first argument (the string) will be split (by default " " is used, but that can be changed using `options.ws`), and all but the first element will be used as the `args` argument, setting the first element as the new command.
@@ -53,8 +57,5 @@ In addition to the options used by [child_process.spawn()](https://nodejs.org/di
 4. The fixed option for _stdio_ with `cp.exec`, and the default for it on `cp.spawn`
 
 -----
-
-[![History](https://img.shields.io/badge/github.com/futagoza/cm-changelog-yellow.svg)](https://github.com/futagoza/cm/blob/master/CHANGELOG.md)
-[![license](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
 
 _@futagoza/child-process_ is Copyright (c) 2018+ Futago-za Ryuu

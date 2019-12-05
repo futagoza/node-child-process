@@ -58,6 +58,7 @@ In addition to the options used by [child_process.spawn()](https://nodejs.org/di
 3. The fixed option for _stdio_ with `cp.run`
 4. The fixed option for _stdio_ with `cp.exec`, and the default for it on `cp.spawn`
 
------
+## license
 
-_@futagoza/child-process_ is Copyright (c) 2018+ Futago-za Ryuu
+Copyright (c) 2018+ [Futago-za Ryuu](http://github.com/futagoza)<br>
+The MIT License, [http://opensource.org/licenses/MIT](http://opensource.org/licenses/MIT)

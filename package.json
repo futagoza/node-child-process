@@ -1,6 +1,6 @@
 {
     "name": "@futagoza/child-process",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "A set of Promise-based methods around child_process.spawn",
     "keywords": [
         "child_process",

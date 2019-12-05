@@ -19,7 +19,10 @@
         "src"
     ],
     "scripts": {
-        "lint": "eslint --ext .js,.ts ."
+        "lint": "eslint --ext .js,.ts .",
+        "rebuild": "rimraf out && tsc",
+        "preversion": "npm run rebuild",
+        "postversion": "git push --follow-tags && npm publish"
     },
     "devDependencies": {
         "@futagoza/eslint-config": "12.0.0",

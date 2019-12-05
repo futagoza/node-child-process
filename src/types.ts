@@ -53,7 +53,7 @@ export interface SpawnError extends UnkownSpawnError {
      * Arguments passed to the child process
      */
 
-    args: string[];
+    argv?: string[];
 
     /**
      * The normalized options passed to `cp.promise`
@@ -226,7 +226,7 @@ export type ChildProcessResult = Promise<{
      * Arguments passed to the child process
      */
 
-    args: string[];
+    argv?: string[];
 
     /**
      * The normalized options passed to `cp.promise`

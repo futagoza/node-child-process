@@ -8,7 +8,6 @@ import {
 
 } from "./types";
 
-
 // Return's either a buffer or a string depending on `encoding`
 function DECODE_BUFFER( data: unknown[], encoding?: string ) {
 
@@ -25,12 +24,12 @@ function DECODE_BUFFER( data: unknown[], encoding?: string ) {
 /**
  * Will run `child_process.spawn()` wrapped in a `Promise`.
  * 
- * @param {String} command Path of the executable to run as a child process.
- * @param {String[]} [args] Arguments to pass to the child process.
- * @param {{}} [options] Options passed to `child_process.spawn()`.
+ * @param command Path of the executable to run as a child process.
+ * @param argv Arguments that will be passed to the child process.
+ * @param options Options passed to `child_process.spawn()`.
  */
 
-export function promise( command: string, args: string[] = [], options: ChildProcessOptions = {} ): ChildProcessResult {
+export function promise( command: string, argv: string[] = [], options: ChildProcessOptions = {} ): ChildProcessResult {
 
     const STDIO_IS_PIPE = options.stdio === "pipe";
     const BUFFER = STDIO_IS_PIPE && options.buffer === true;
@@ -38,7 +37,7 @@ export function promise( command: string, args: string[] = [], options: ChildPro
 
     return new Promise( ( resolve, reject ) => {
 
-        const child = spawn( command, args, options );
+        const child = spawn( command, argv, options );
 
         let EXIT_CODE = 0;
         let EXIT_SIGNAL = null as unknown as string;
@@ -56,10 +55,13 @@ export function promise( command: string, args: string[] = [], options: ChildPro
             if ( typeof reason === "string" ) reason = new Error( reason ) as SpawnError;
 
             reason[ ErrorSymbol ] = true;
+            reason.command = command;
+            reason.argv = argv;
+            reason.options = options;
             reason.code = EXIT_CODE;
             reason.signal = EXIT_SIGNAL;
             reason.path = command;
-            reason.spawnargs = args;
+            reason.spawnargs = argv;
             reason.syscall = "spawn " + command;
 
             if ( BUFFER ) {
@@ -112,7 +114,7 @@ export function promise( command: string, args: string[] = [], options: ChildPro
                         signal,
                         path: command,
                         command,
-                        args,
+                        argv,
                         options,
                         stderr: BUFFER ? DECODE_BUFFER( stderr, ENCODING ) : void 0,
                         stdout: BUFFER ? DECODE_BUFFER( stdout, ENCODING ) : void 0,

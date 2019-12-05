@@ -27,13 +27,13 @@ export function spawn( options: ChildProcessOptions ): ChildProcessResult;
 
 export function spawn( ..._arguments: UnsortedArguments ) {
 
-    const [ command, args, options ] = normalizeArguments( _arguments );
+    const [ command, argv, options ] = normalizeArguments( _arguments );
 
     if ( typeof options.buffer !== "boolean" ) options.buffer = true;
     if ( ! options.hasOwnProperty( "encoding" ) ) options.encoding = "buffer";
     if ( ! options.stdio ) options.stdio = "pipe";
 
-    return promise( command, args, options );
+    return promise( command, argv, options );
 
 }
 
@@ -53,14 +53,14 @@ export function exec( options: ChildProcessOptions ): ChildProcessResult;
 
 export function exec( ..._arguments: UnsortedArguments ) {
 
-    const [ command, args, options ] = normalizeArguments( _arguments );
+    const [ command, argv, options ] = normalizeArguments( _arguments );
 
     if ( ! options.hasOwnProperty( "encoding" ) ) options.encoding = "utf8";
     if ( typeof options.shell !== "string" ) options.shell = true;
     options.stdio = "pipe";
     options.buffer = true;
 
-    return promise( command, args, options );
+    return promise( command, argv, options );
 
 }
 
@@ -80,12 +80,12 @@ export function run( options: ChildProcessOptions ): ChildProcessResult;
 
 export function run( ..._arguments: UnsortedArguments ) {
 
-    const [ command, args, options ] = normalizeArguments( _arguments );
+    const [ command, argv, options ] = normalizeArguments( _arguments );
 
     if ( typeof options.shell !== "string" ) options.shell = true;
     options.stdio = "inherit";
 
-    return promise( command, args, options );
+    return promise( command, argv, options );
 
 }
 

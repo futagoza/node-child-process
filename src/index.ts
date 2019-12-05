@@ -25,7 +25,7 @@ export function spawn( command: string ): ChildProcessResult;
 export function spawn( command: string, options: ChildProcessOptions ): ChildProcessResult;
 export function spawn( options: ChildProcessOptions ): ChildProcessResult;
 
-export function spawn( ..._arguments: UnsortedArguments ) {
+export async function spawn( ..._arguments: UnsortedArguments ) {
 
     const [ command, argv, options ] = normalizeArguments( _arguments );
 
@@ -51,7 +51,7 @@ export function exec( command: string ): ChildProcessResult;
 export function exec( command: string, options: ChildProcessOptions ): ChildProcessResult;
 export function exec( options: ChildProcessOptions ): ChildProcessResult;
 
-export function exec( ..._arguments: UnsortedArguments ) {
+export async function exec( ..._arguments: UnsortedArguments ) {
 
     const [ command, argv, options ] = normalizeArguments( _arguments );
 
@@ -78,7 +78,7 @@ export function run( command: string ): ChildProcessResult;
 export function run( command: string, options: ChildProcessOptions ): ChildProcessResult;
 export function run( options: ChildProcessOptions ): ChildProcessResult;
 
-export function run( ..._arguments: UnsortedArguments ) {
+export async function run( ..._arguments: UnsortedArguments ) {
 
     const [ command, argv, options ] = normalizeArguments( _arguments );
 

@@ -1,24 +1,20 @@
-"use strict";
+import { spawn } from "child_process";
+import { ErrorSymbol } from "./isSpawnError";
+import {
 
-const cp = require( "child_process" );
-const Promise = require( "any-promise" );
+    ChildProcessOptions,
+    ChildProcessResult,
+    SpawnError,
 
-/**
- * A unique symbol for Error's from SpawnProcess.
- */
-const ErrorSymbol = Symbol( "@futagoza/child-process" );
+} from "./types";
 
-/**
- * Return's either a buffer or a string depending on `encoding`.
- * 
- * @param {[]} data 
- * @param {String} encoding 
- */
-function decode( data, { encoding } ) {
+
+// Return's either a buffer or a string depending on `encoding`
+function DECODE_BUFFER( data: unknown[], encoding?: string ) {
 
     if ( typeof encoding !== "string" ) return data.join( "" ).trim();
 
-    const buffer = Buffer.concat( data );
+    const buffer = Buffer.concat( data as [] );
 
     return encoding === "buffer" || ! Buffer.isEncoding( encoding )
         ? buffer
@@ -33,31 +29,31 @@ function decode( data, { encoding } ) {
  * @param {String[]} [args] Arguments to pass to the child process.
  * @param {{}} [options] Options passed to `child_process.spawn()`.
  */
-function spawn( command, args = [], options = {} ) {
+
+export function promise( command: string, args: string[] = [], options: ChildProcessOptions = {} ): ChildProcessResult {
 
     const STDIO_IS_PIPE = options.stdio === "pipe";
     const BUFFER = STDIO_IS_PIPE && options.buffer === true;
+    const ENCODING = options.encoding;
 
     return new Promise( ( resolve, reject ) => {
 
-        const child = cp.spawn( command, args, options );
+        const child = spawn( command, args, options );
 
         let EXIT_CODE = 0;
-        let EXIT_SIGNAL = null;
-        let stdout = BUFFER ? [] : null;
-        let stderr = BUFFER ? [] : null;
+        let EXIT_SIGNAL = null as unknown as string;
+        const stdout: unknown[] = [];
+        const stderr: unknown[] = [];
 
         /**
          * - If a string, create an error object; Otherwise assume it's an object.
          * - Attach `ErrorSymbol` to the error for use with `isSpawnError`.
          * - Attach stdio, Spawn and other usefull objects?
          * - Promise.reject
-         * 
-         * @param {Error} reason
          */
-        function handleError( reason ) {
+        function handleError( reason: SpawnError | string ) {
 
-            if ( typeof reason === "string" ) reason = new Error( reason );
+            if ( typeof reason === "string" ) reason = new Error( reason ) as SpawnError;
 
             reason[ ErrorSymbol ] = true;
             reason.code = EXIT_CODE;
@@ -68,8 +64,8 @@ function spawn( command, args = [], options = {} ) {
 
             if ( BUFFER ) {
 
-                reason.stdout = decode( stdout, options );
-                reason.stderr = decode( stderr, options );
+                reason.stdout = DECODE_BUFFER( stdout, ENCODING );
+                reason.stderr = DECODE_BUFFER( stderr, ENCODING );
 
             }
 
@@ -110,20 +106,24 @@ function spawn( command, args = [], options = {} ) {
 
                 if ( code === 0 ) {
 
-                    if ( BUFFER ) {
+                    resolve( {
 
-                        stdout = decode( stdout, options );
-                        stderr = decode( stderr, options );
+                        code,
+                        signal,
+                        path: command,
+                        command,
+                        args,
+                        options,
+                        stderr: BUFFER ? DECODE_BUFFER( stderr, ENCODING ) : void 0,
+                        stdout: BUFFER ? DECODE_BUFFER( stdout, ENCODING ) : void 0,
 
-                    }
+                    } );
 
-                    resolve( { command, args, options, signal, stderr, stdout } );
-
-                } else {
-
-                    handleError( `command exited with code: ${ code }` );
+                    return;
 
                 }
+
+                handleError( `command exited with code: ${ code }` );
 
             } );
 
@@ -132,10 +132,3 @@ function spawn( command, args = [], options = {} ) {
     } );
 
 }
-
-// Exports
-
-module.exports = spawn;
-module.exports.default = spawn;
-module.exports.Symbol = ErrorSymbol;
-module.exports.spawn = spawn;

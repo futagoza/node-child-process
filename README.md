@@ -2,6 +2,8 @@
 [![History](https://img.shields.io/badge/%40futagoza%2Fchild--process-changelog-yellow)](https://github.com/futagoza/node-child-process/blob/master/CHANGELOG.md)
 [![license](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
 
+> This library is developed for use with Node 10+ and may (or may not) work with versions of Node lower then this.
+
 A set of functions based around `child_process.spawn()` that return Promises.
 
 The arguments are the same as `child_process.spawn()`, but if the second argument isn't an array, it will try `options.args` or `options.argv`; failing that, the first argument (the string) will be split (by default " " is used, but that can be changed using `options.ws`), and all but the first element will be used as the `args` argument, setting the first element as the new command.

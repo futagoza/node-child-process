@@ -4,9 +4,11 @@
 
 > This library is developed for use with Node 10+ and may (or may not) work with versions of Node lower then this.
 
-A set of functions based around `child_process.spawn()` that return Promises.
+A custom async-focused variant of Node's built-in child-process module, based exclusively around `child_process.spawn()`
 
-The arguments are the same as `child_process.spawn()`, but if the second argument isn't an array, it will try `options.args` or `options.argv`; failing that, the first argument (the string) will be split (by default " " is used, but that can be changed using `options.ws`), and all but the first element will be used as the `args` argument, setting the first element as the new command.
+All the spawning methods accept the same arguments as `child_process.spawn()`, but in any order.
+
+If an array argument isn't provided, it will try `options.args` or `options.argv`; failing that, the string argument (or `options.command` or `options.file`) will be split (by default `" "` is used, but that can be changed using `options.ws`), and all but the first element will be used as the `argv` argument, setting the first element as the new `command` argument.
 
 ### example
 
@@ -14,13 +16,13 @@ The arguments are the same as `child_process.spawn()`, but if the second argumen
 const cp = require( "@futagoza/child-process" );
 
 // Spawns a new process.
-cp.spawn( command, args?, options? )
+cp.spawn( command, argv?, options? )
 
 // Spawns a shell, executing the command inside the shell and buffering any generated output.
-cp.exec( command, args?, options? )
+cp.exec( command, argv?, options? )
 
 // Same as `cp.exec`, but sends any output to the current process instead.
-cp.run( command, args?, options? )
+cp.run( command, argv?, options? )
 
 // Confirm if the given error was thrown from a spawn'ed process.
 cp.isSpawnError( object? )
@@ -39,12 +41,12 @@ In addition to the options used by [child_process.spawn()](https://nodejs.org/di
 
 |   option   | description |
 | ---------- | ----------- |
-| args | Alternative to passing an array as the second argument |
-| argv | Alternative to passing an array as the second argument |
+| args | Alternative to passing an array as argv argument (using _options.argv_ is preferred) |
+| argv | Alternative to passing an array as argv argument |
 | buffer<sub>1</sub> | On _options.pipe_ this will buffer the results from both `stdout` and `stderr` |
-| command | Alternative to passing the command as the first argument |
+| command | Alternative to passing the command as a string argument |
 | encoding<sub>1</sub> | Used alongside _options.buffer_, this specifies the character encoding used to decode the results |
-| file | Alternative to passing the command as the first argument |
+| file | Alternative to passing the command as a string argument |
 | ignore<sub>2</sub> | Will set _options.stdio_ to __ignore__ |
 | inherit<sub>2</sub> | Will set _options.stdio_ to __inherit__<sub>3</sub> |
 | input | passed to the child process's `stdin` |

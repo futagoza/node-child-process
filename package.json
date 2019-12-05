@@ -9,8 +9,7 @@
         "run",
         "Promise"
     ],
-    "homepage": "https://github.com/futagoza/cm",
-    "repository": "https://github.com/futagoza/cm/tree/master/packages/@futagoza/child-process",
+    "repository": "https://github.com/futagoza/node-child-process",
     "license": "MIT",
     "author": "Futago-za Ryuu <futagoza.ryuu@gmail.com>",
     "main": "out/index.js",

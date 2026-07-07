@@ -3,7 +3,7 @@ import { ErrorSymbol } from "./isSpawnError.ts"
 import type {
 
     ChildProcessOptions,
-    ChildProcessResult,
+    ChildProcessPromise,
     SpawnError,
 
 } from "../src/types.d.ts"
@@ -29,7 +29,7 @@ function DECODE_BUFFER( data: unknown[], encoding?: string ) {
  * @param options Options passed to `child_process.spawn()`.
  */
 
-export function promise( command: string, argv: string[] = [], options: ChildProcessOptions = {} ): ChildProcessResult {
+export function promise( command: string, argv: string[] = [], options: ChildProcessOptions = {} ): ChildProcessPromise {
 
     const STDIO_IS_PIPE = options.stdio === "pipe"
     const BUFFER = STDIO_IS_PIPE && options.buffer === true

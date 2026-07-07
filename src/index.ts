@@ -3,7 +3,7 @@ import { promise } from "./promise.ts"
 import type {
 
     ChildProcessOptions,
-    ChildProcessResult,
+    ChildProcessPromise,
     UnsortedArguments,
 
 } from "../src/types.d.ts"
@@ -19,11 +19,11 @@ import type {
  * @param options Options passed to `child_process.spawn()`.
  */
 
-export function spawn( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessResult
-export function spawn( command: string, argv: string[] ): ChildProcessResult
-export function spawn( command: string ): ChildProcessResult
-export function spawn( command: string, options: ChildProcessOptions ): ChildProcessResult
-export function spawn( options: ChildProcessOptions ): ChildProcessResult
+export function spawn( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessPromise
+export function spawn( command: string, argv: string[] ): ChildProcessPromise
+export function spawn( command: string ): ChildProcessPromise
+export function spawn( command: string, options: ChildProcessOptions ): ChildProcessPromise
+export function spawn( options: ChildProcessOptions ): ChildProcessPromise
 
 export function spawn( ..._arguments: UnsortedArguments ) {
 
@@ -45,11 +45,11 @@ export function spawn( ..._arguments: UnsortedArguments ) {
  * @param options Options passed to `child_process.spawn()`.
  */
 
-export function exec( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessResult
-export function exec( command: string, argv: string[] ): ChildProcessResult
-export function exec( command: string ): ChildProcessResult
-export function exec( command: string, options: ChildProcessOptions ): ChildProcessResult
-export function exec( options: ChildProcessOptions ): ChildProcessResult
+export function exec( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessPromise
+export function exec( command: string, argv: string[] ): ChildProcessPromise
+export function exec( command: string ): ChildProcessPromise
+export function exec( command: string, options: ChildProcessOptions ): ChildProcessPromise
+export function exec( options: ChildProcessOptions ): ChildProcessPromise
 
 export function exec( ..._arguments: UnsortedArguments ) {
 
@@ -72,11 +72,11 @@ export function exec( ..._arguments: UnsortedArguments ) {
  * @param options Options passed to `child_process.spawn()`.
  */
 
-export function run( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessResult
-export function run( command: string, argv: string[] ): ChildProcessResult
-export function run( command: string ): ChildProcessResult
-export function run( command: string, options: ChildProcessOptions ): ChildProcessResult
-export function run( options: ChildProcessOptions ): ChildProcessResult
+export function run( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessPromise
+export function run( command: string, argv: string[] ): ChildProcessPromise
+export function run( command: string ): ChildProcessPromise
+export function run( command: string, options: ChildProcessOptions ): ChildProcessPromise
+export function run( options: ChildProcessOptions ): ChildProcessPromise
 
 export function run( ..._arguments: UnsortedArguments ) {
 

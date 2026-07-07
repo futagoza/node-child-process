@@ -193,10 +193,16 @@ export interface NormalizedArguments extends Array<unknown> {
 }
 
 /**
- * The successful result of `@futagoza/child-process` methods
+ * All `@futagoza/child-process` methods return a `child_process.spawn` wrapped in a Promise
  */
 
-export type ChildProcessResult = Promise<{
+export type ChildProcessPromise = Promise<ChildProcessOutput>
+
+/**
+ * The expected result of `@futagoza/child-process` methods
+ */
+
+export type ChildProcessOutput = {
 
     /**
      * Exit code
@@ -237,4 +243,4 @@ export type ChildProcessResult = Promise<{
     stderr?: string | Buffer
     stdout?: string | Buffer
 
-}>
+}

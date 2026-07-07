@@ -37,7 +37,9 @@ export function promise( command: string, argv: string[] = [], options: ChildPro
 
     return new Promise( ( resolve, reject ) => {
 
-        const child = spawn( command, argv, options )
+        const child = options.shell === true
+            ? spawn( argv.length ? `${ command } ${ argv.join( " " ) }` : command, options )
+            : spawn( command, argv, options )
 
         let EXIT_CODE = 0
         let EXIT_SIGNAL = null as unknown as string

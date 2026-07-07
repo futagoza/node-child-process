@@ -1,23 +1,23 @@
-import { spawn } from "child_process";
-import { ErrorSymbol } from "./isSpawnError";
-import {
+import { spawn } from "node:child_process"
+import { ErrorSymbol } from "./isSpawnError.ts"
+import type {
 
     ChildProcessOptions,
     ChildProcessResult,
     SpawnError,
 
-} from "./types";
+} from "./types.ts"
 
 // Return's either a buffer or a string depending on `encoding`
 function DECODE_BUFFER( data: unknown[], encoding?: string ) {
 
-    if ( typeof encoding !== "string" ) return data.join( "" ).trim();
+    if ( typeof encoding !== "string" ) return data.join( "" ).trim()
 
-    const buffer = Buffer.concat( data as [] );
+    const buffer = Buffer.concat( data as [] )
 
     return encoding === "buffer" || ! Buffer.isEncoding( encoding )
         ? buffer
-        : buffer.toString( encoding );
+        : buffer.toString( encoding )
 
 }
 
@@ -31,69 +31,69 @@ function DECODE_BUFFER( data: unknown[], encoding?: string ) {
 
 export function promise( command: string, argv: string[] = [], options: ChildProcessOptions = {} ): ChildProcessResult {
 
-    const STDIO_IS_PIPE = options.stdio === "pipe";
-    const BUFFER = STDIO_IS_PIPE && options.buffer === true;
-    const ENCODING = options.encoding;
+    const STDIO_IS_PIPE = options.stdio === "pipe"
+    const BUFFER = STDIO_IS_PIPE && options.buffer === true
+    const ENCODING = options.encoding
 
     return new Promise( ( resolve, reject ) => {
 
-        const child = spawn( command, argv, options );
+        const child = spawn( command, argv, options )
 
-        let EXIT_CODE = 0;
-        let EXIT_SIGNAL = null as unknown as string;
-        const stdout: unknown[] = [];
-        const stderr: unknown[] = [];
+        let EXIT_CODE = 0
+        let EXIT_SIGNAL = null as unknown as string
+        const stdout: unknown[] = []
+        const stderr: unknown[] = []
 
         /**
-         * - If a string, create an error object; Otherwise assume it's an object.
+         * - If a string, create an error object Otherwise assume it's an object.
          * - Attach `ErrorSymbol` to the error for use with `isSpawnError`.
          * - Attach stdio, Spawn and other usefull objects?
          * - Promise.reject
          */
         function handleError( reason: SpawnError | string ) {
 
-            if ( typeof reason === "string" ) reason = new Error( reason ) as SpawnError;
+            if ( typeof reason === "string" ) reason = new Error( reason ) as SpawnError
 
-            reason[ ErrorSymbol ] = true;
-            reason.command = command;
-            reason.argv = argv;
-            reason.options = options;
-            reason.code = EXIT_CODE;
-            reason.signal = EXIT_SIGNAL;
-            reason.path = command;
-            reason.spawnargs = argv;
-            reason.syscall = "spawn " + command;
+            reason[ ErrorSymbol ] = true
+            reason.command = command
+            reason.argv = argv
+            reason.options = options
+            reason.code = EXIT_CODE
+            reason.signal = EXIT_SIGNAL
+            reason.path = command
+            reason.spawnargs = argv
+            reason.syscall = "spawn " + command
 
             if ( BUFFER ) {
 
-                reason.stdout = DECODE_BUFFER( stdout, ENCODING );
-                reason.stderr = DECODE_BUFFER( stderr, ENCODING );
+                reason.stdout = DECODE_BUFFER( stdout, ENCODING )
+                reason.stderr = DECODE_BUFFER( stderr, ENCODING )
 
             }
 
-            if ( child.stdout ) child.stdout.destroy();
-            if ( child.stderr ) child.stderr.destroy();
+            if ( child.stdout ) child.stdout.destroy()
+            if ( child.stderr ) child.stderr.destroy()
 
-            reject( reason );
+            reject( reason )
 
         }
 
-        if ( STDIO_IS_PIPE ) {
+        if ( STDIO_IS_PIPE && child.stdout && child.stderr ) {
 
-            child.stdout.on( "error", handleError );
-            child.stderr.on( "error", handleError );
+            child.stdout.on( "error", handleError )
+            child.stderr.on( "error", handleError )
 
             if ( BUFFER ) {
 
-                child.stdout.on( "data", data => stdout.push( data ) );
-                child.stderr.on( "data", data => stderr.push( data ) );
+                child.stdout.on( "data", data => { stdout.push( data ) } )
+                child.stderr.on( "data", data => { stderr.push( data ) } )
 
             }
 
-            if ( options.input ) {
+            if ( options.input && child.stdin ) {
 
-                child.stdin.on( "error", handleError );
-                child.stdin.end( options.input );
+                child.stdin.on( "error", handleError )
+                child.stdin.end( options.input )
 
             }
 
@@ -101,10 +101,10 @@ export function promise( command: string, argv: string[] = [], options: ChildPro
 
         child
             .on( "error", handleError )
-            .on( "close", ( code, signal ) => {
+            .on( "close", ( code: number, signal: string ) => {
 
-                EXIT_CODE = code;
-                EXIT_SIGNAL = signal;
+                EXIT_CODE = code
+                EXIT_SIGNAL = signal
 
                 if ( code === 0 ) {
 
@@ -119,18 +119,18 @@ export function promise( command: string, argv: string[] = [], options: ChildPro
                         stderr: BUFFER ? DECODE_BUFFER( stderr, ENCODING ) : void 0,
                         stdout: BUFFER ? DECODE_BUFFER( stdout, ENCODING ) : void 0,
 
-                    } );
+                    } )
 
-                    return;
+                    return
 
                 }
 
-                handleError( `command exited with code: ${ code }` );
+                handleError( `command exited with code: ${ code }` )
 
-            } );
+            } )
 
-        if ( typeof options.ready === "function" ) options.ready( child, options );
+        if ( typeof options.ready === "function" ) options.ready( child, options )
 
-    } );
+    } )
 
 }

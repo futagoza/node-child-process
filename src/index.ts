@@ -1,12 +1,12 @@
-import { normalizeArguments } from "./normalizeArguments";
-import { promise } from "./promise";
-import {
+import { normalizeArguments } from "./normalizeArguments.ts"
+import { promise } from "./promise.ts"
+import type {
 
     ChildProcessOptions,
     ChildProcessResult,
     UnsortedArguments,
 
-} from "./types";
+} from "./types.ts"
 
 /**
  * Spawns a new process.
@@ -19,21 +19,21 @@ import {
  * @param options Options passed to `child_process.spawn()`.
  */
 
-export function spawn( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessResult;
-export function spawn( command: string, argv: string[] ): ChildProcessResult;
-export function spawn( command: string ): ChildProcessResult;
-export function spawn( command: string, options: ChildProcessOptions ): ChildProcessResult;
-export function spawn( options: ChildProcessOptions ): ChildProcessResult;
+export function spawn( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessResult
+export function spawn( command: string, argv: string[] ): ChildProcessResult
+export function spawn( command: string ): ChildProcessResult
+export function spawn( command: string, options: ChildProcessOptions ): ChildProcessResult
+export function spawn( options: ChildProcessOptions ): ChildProcessResult
 
-export async function spawn( ..._arguments: UnsortedArguments ) {
+export function spawn( ..._arguments: UnsortedArguments ) {
 
-    const [ command, argv, options ] = normalizeArguments( _arguments );
+    const [ command, argv, options ] = normalizeArguments( _arguments )
 
-    if ( typeof options.buffer !== "boolean" ) options.buffer = true;
-    if ( ! options.hasOwnProperty( "encoding" ) ) options.encoding = "buffer";
-    if ( ! options.stdio ) options.stdio = "pipe";
+    if ( typeof options.buffer !== "boolean" ) options.buffer = true
+    if ( ! options.hasOwnProperty( "encoding" ) ) options.encoding = "buffer"
+    options.stdio ??= "pipe"
 
-    return promise( command, argv, options );
+    return promise( command, argv, options )
 
 }
 
@@ -45,22 +45,22 @@ export async function spawn( ..._arguments: UnsortedArguments ) {
  * @param options Options passed to `child_process.spawn()`.
  */
 
-export function exec( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessResult;
-export function exec( command: string, argv: string[] ): ChildProcessResult;
-export function exec( command: string ): ChildProcessResult;
-export function exec( command: string, options: ChildProcessOptions ): ChildProcessResult;
-export function exec( options: ChildProcessOptions ): ChildProcessResult;
+export function exec( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessResult
+export function exec( command: string, argv: string[] ): ChildProcessResult
+export function exec( command: string ): ChildProcessResult
+export function exec( command: string, options: ChildProcessOptions ): ChildProcessResult
+export function exec( options: ChildProcessOptions ): ChildProcessResult
 
-export async function exec( ..._arguments: UnsortedArguments ) {
+export function exec( ..._arguments: UnsortedArguments ) {
 
-    const [ command, argv, options ] = normalizeArguments( _arguments );
+    const [ command, argv, options ] = normalizeArguments( _arguments )
 
-    if ( ! options.hasOwnProperty( "encoding" ) ) options.encoding = "utf8";
-    if ( typeof options.shell !== "string" ) options.shell = true;
-    options.stdio = "pipe";
-    options.buffer = true;
+    if ( ! options.hasOwnProperty( "encoding" ) ) options.encoding = "utf8"
+    if ( typeof options.shell !== "string" ) options.shell = true
+    options.stdio = "pipe"
+    options.buffer = true
 
-    return promise( command, argv, options );
+    return promise( command, argv, options )
 
 }
 
@@ -72,28 +72,28 @@ export async function exec( ..._arguments: UnsortedArguments ) {
  * @param options Options passed to `child_process.spawn()`.
  */
 
-export function run( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessResult;
-export function run( command: string, argv: string[] ): ChildProcessResult;
-export function run( command: string ): ChildProcessResult;
-export function run( command: string, options: ChildProcessOptions ): ChildProcessResult;
-export function run( options: ChildProcessOptions ): ChildProcessResult;
+export function run( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessResult
+export function run( command: string, argv: string[] ): ChildProcessResult
+export function run( command: string ): ChildProcessResult
+export function run( command: string, options: ChildProcessOptions ): ChildProcessResult
+export function run( options: ChildProcessOptions ): ChildProcessResult
 
-export async function run( ..._arguments: UnsortedArguments ) {
+export function run( ..._arguments: UnsortedArguments ) {
 
-    const [ command, argv, options ] = normalizeArguments( _arguments );
+    const [ command, argv, options ] = normalizeArguments( _arguments )
 
-    if ( typeof options.shell !== "string" ) options.shell = true;
-    options.stdio = "inherit";
+    if ( typeof options.shell !== "string" ) options.shell = true
+    options.stdio = "inherit"
 
-    return promise( command, argv, options );
+    return promise( command, argv, options )
 
 }
 
 // Other exports
 
-import { ErrorSymbol, isSpawnError } from "./isSpawnError";
+import { ErrorSymbol, isSpawnError } from "./isSpawnError.ts"
 
-export * from "./types";
+export type * from "./types.ts"
 export {
 
     ErrorSymbol,
@@ -101,4 +101,4 @@ export {
     normalizeArguments,
     promise,
 
-};
+}

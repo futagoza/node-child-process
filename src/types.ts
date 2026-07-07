@@ -1,15 +1,18 @@
-import { ChildProcess, SpawnOptions } from "child_process";
-import { ErrorSymbol } from "./isSpawnError";
+import type {
+    ChildProcess,
+    SpawnOptions,
+} from "node:child_process"
+import { ErrorSymbol } from "./isSpawnError.ts"
 
 /**
- * An unkown spawn error
+ * An unknown spawn error
  */
 
 export interface UnkownSpawnError extends Error {
 
-    spawnargs?: string[];
+    spawnargs?: string[]
 
-    syscall?: string;
+    syscall?: string
 
 }
 
@@ -23,46 +26,46 @@ export interface SpawnError extends UnkownSpawnError {
      * Can be used to verify that the error was from `@futagoza/child-process`
      */
 
-    [ ErrorSymbol ]: true;
+    [ ErrorSymbol ]: true
 
     /**
      * Exit code
      */
 
-    code: number;
+    code: number
 
     /**
      * Exit signal
      */
 
-    signal: string;
+    signal: string
 
     /**
      * The executable to run as a child process
      */
 
-    path: string;
+    path: string
 
     /**
      * Alias of `SpawnError#path`
      */
 
-    command: string;
+    command: string
 
     /**
      * Arguments passed to the child process
      */
 
-    argv?: string[];
+    argv?: string[]
 
     /**
      * The normalized options passed to `cp.promise`
      */
 
-    options: ChildProcessOptions;
+    options: ChildProcessOptions
 
-    stderr?: string | Buffer;
-    stdout?: string | Buffer;
+    stderr?: string | Buffer
+    stdout?: string | Buffer
 
 }
 
@@ -76,13 +79,13 @@ export interface ChildProcessOptions extends SpawnOptions {
      * Alternative to passing an array as the second argument
      */
 
-    args?: string[];
+    args?: string[]
 
     /**
      * Alternative to passing an array as the second argument
      */
 
-    argv?: string[];
+    argv?: string[]
 
     /**
      * On _options.pipe_ this will buffer the results from both `stdout` and `stderr`
@@ -90,13 +93,13 @@ export interface ChildProcessOptions extends SpawnOptions {
      * __NOTE:__ This option is only used by `cp.spawn` _(optional)_ and `cp.exec` _(fixed)_
      */
 
-    buffer?: boolean;
+    buffer?: boolean
 
     /**
      * Alternative to passing the command as the first argument
      */
 
-    command?: string;
+    command?: string
 
     /**
      * Used alongside _options.buffer_, this specifies the character encoding used to decode the results
@@ -104,13 +107,13 @@ export interface ChildProcessOptions extends SpawnOptions {
      * __NOTE:__ Like _options.buffer_, this option is only used by `cp.spawn` and `cp.exec`
      */
 
-    encoding?: string;
+    encoding?: string
 
     /**
      * Alternative to passing the command as the first argument
      */
 
-    file?: string;
+    file?: string
 
     /**
      * Will set _options.stdio_ to __ignore__
@@ -118,7 +121,7 @@ export interface ChildProcessOptions extends SpawnOptions {
      * __NOTE:__ Is ignored if _options.stdio_ is already set
      */
 
-    ignore?: boolean;
+    ignore?: boolean
 
     /**
      * Will set _options.stdio_ to __inherit__
@@ -128,13 +131,13 @@ export interface ChildProcessOptions extends SpawnOptions {
      * - Is a fixed option for _options.stdio_ with `cp.run`
      */
 
-    inherit?: boolean;
+    inherit?: boolean
 
     /**
      * Will be passed to the child process's `stdin`
      */
 
-    input?: unknown;
+    input?: unknown
 
     /**
      * Will set _options.stdio_ to __pipe__
@@ -145,7 +148,7 @@ export interface ChildProcessOptions extends SpawnOptions {
      * - Is the default for _options.stdio_ on `cp.spawn`
      */
 
-    pipe?: boolean;
+    pipe?: boolean
 
     /**
      * A function called with the child process as it's argument once the promise is running
@@ -154,7 +157,7 @@ export interface ChildProcessOptions extends SpawnOptions {
      * @param options The normalized options
      */
 
-    ready?: ( child: ChildProcess, options: ChildProcessOptions ) => unknown;
+    ready?: ( child: ChildProcess, options: ChildProcessOptions ) => unknown
 
     /**
      * Will set _options.stdio_ to __pipe__
@@ -162,13 +165,13 @@ export interface ChildProcessOptions extends SpawnOptions {
      * __NOTE:__ Is ignored if _options.stdio_ is already set
      */
 
-    silent?: boolean;
+    silent?: boolean
 
     /**
      * If there were no _args_ found, then this is used to split the _command_ string and extract the _args_
      */
 
-    ws?: string;
+    ws?: string
 
 }
 
@@ -176,7 +179,7 @@ export interface ChildProcessOptions extends SpawnOptions {
  * Represents the arguments passed to `cp.normalizeArguments` in any order
  */
 
-export type UnsortedArguments = Array<string | string[] | ChildProcessOptions>;
+export type UnsortedArguments = Array<string | string[] | ChildProcessOptions>
 
 /**
  * The array returned from `cp.normalizeArguments`
@@ -184,11 +187,11 @@ export type UnsortedArguments = Array<string | string[] | ChildProcessOptions>;
 
 export interface NormalizedArguments extends Array<unknown> {
 
-    [ 0 ]: string;
+    [ 0 ]: string
 
-    [ 1 ]: string[];
+    [ 1 ]: string[]
 
-    [ 2 ]: ChildProcessOptions;
+    [ 2 ]: ChildProcessOptions
 
 }
 
@@ -202,39 +205,39 @@ export type ChildProcessResult = Promise<{
      * Exit code
      */
 
-    code: 0;
+    code: 0
 
     /**
      * Exit signal
      */
 
-    signal: string;
+    signal: string
 
     /**
      * Alias of `SpawnError#command`
      */
 
-    path: string;
+    path: string
 
     /**
      * The executable to run as a child process
      */
 
-    command: string;
+    command: string
 
     /**
      * Arguments passed to the child process
      */
 
-    argv?: string[];
+    argv?: string[]
 
     /**
      * The normalized options passed to `cp.promise`
      */
 
-    options: ChildProcessOptions;
+    options: ChildProcessOptions
 
-    stderr?: string | Buffer;
-    stdout?: string | Buffer;
+    stderr?: string | Buffer
+    stdout?: string | Buffer
 
-}>;
+}>

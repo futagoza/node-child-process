@@ -12,7 +12,7 @@
     "repository": "https://github.com/futagoza/node-child-process",
     "license": "MIT",
     "author": "Futago-za Ryuu <futagoza.ryuu@gmail.com>",
-    "main": "out/index.js",
+    "main": "index.js",
     "type": "module",
     "files": [
         "out",

@@ -13,7 +13,12 @@ If an array argument isn't provided, it will try `options.args` or `options.argv
 ### example
 
 ```js
+// import default (everything)
+import cp from "@futagoza/child-process"
+// import everything, same as classic require("@futagoza/child-process")
 import * as cp from "@futagoza/child-process"
+// named import
+import { $, isSpawnError } from "@futagoza/child-process"
 
 // Spawns a new process.
 cp.spawn( command )

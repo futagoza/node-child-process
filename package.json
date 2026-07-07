@@ -13,6 +13,7 @@
     "license": "MIT",
     "author": "Futago-za Ryuu <futagoza.ryuu@gmail.com>",
     "main": "out/index.js",
+    "type": "module",
     "files": [
         "out",
         "src"
@@ -33,6 +34,6 @@
         "typescript": "6.0.3"
     },
     "engines": {
-        "node": ">= 10"
+        "node": ">= 20"
     }
 }

@@ -2,7 +2,7 @@
 [![History](https://img.shields.io/badge/%40futagoza%2Fchild--process-changelog-yellow)](https://github.com/futagoza/node-child-process/blob/master/CHANGELOG.md)
 [![license](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
 
-> This library is developed for use with Node 10+ and may (or may not) work with versions of Node lower then this.
+> This library is developed for use with Node 20+ (ES2022+ modules) and may not work properly with prior versions of Node.
 
 A custom async-focused variant of Node's built-in child-process module, based exclusively around `child_process.spawn()`
 
@@ -13,7 +13,7 @@ If an array argument isn't provided, it will try `options.args` or `options.argv
 ### example
 
 ```js
-const cp = require( "@futagoza/child-process" );
+import * as cp from "@futagoza/child-process"
 
 // Spawns a new process.
 cp.spawn( command, argv?, options? )
@@ -29,10 +29,10 @@ cp.isSpawnError( object? )
 
 // All arguments are optional, apart from the `command`, which can be passed as the
 // first argument or as an option (either `command` or `file`)
-cp.spawn( "npm", [ "publish", "--access", "public" ] );
-cp.spawn( "npm", { args: [ "publish", "--access", "public" ] } );
-cp.spawn( "npm publish --access public" );
-cp.spawn( { command: "npm publish --access public" } );
+cp.spawn( "npm", [ "publish", "--access", "public" ] )
+cp.spawn( "npm", { args: [ "publish", "--access", "public" ] } )
+cp.spawn( "npm publish --access public" )
+cp.spawn( { command: "npm publish --access public" } )
 ```
 
 ### options

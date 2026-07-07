@@ -1,5 +1,6 @@
 import { normalizeArguments } from "./normalizeArguments.ts"
 import { promise } from "./promise.ts"
+import { preprocess } from "./template.ts"
 import type {
 
     ChildProcessOptions,
@@ -119,6 +120,34 @@ export function x( command: string, callback?: string | boolean | XCallback, cwd
     const p = fn( command, { cwd } )
 
     return typeof callback === "function" ? p.then( callback ) : p
+
+}
+
+/**
+ * Simple wrapper for `exec` to use on template strings.
+ */
+
+export function $( command: string | string[], ...values: unknown[] ) {
+
+    return exec( preprocess( command, values ) )
+
+}
+
+/**
+ * Create a wrapper for `spawn` to use on template strings.
+ * 
+ * **NOTE:** If `options.shell` isn't a string, will default this property to `true`; otherwise behaves the same.
+ */
+
+export function create( options: ChildProcessOptions = {} ) {
+
+    if ( typeof options.shell !== "string" ) options.shell = true
+
+    return function $( command: string | string[], ...values: unknown[] ) {
+
+        return spawn( preprocess( command, values ), options )
+
+    }
 
 }
 

@@ -44,6 +44,13 @@ cp.x( command, buffer, cwd )
 cp.x( command, callback )
 cp.x( command, callback, cwd )
 
+// Simple wrapper for `exec` (for a bash-like experience with template strings)
+cp.$`command`
+
+// Create a wrapper for `spawn` to use on template strings.
+const $ = cp.create( options )
+$`command`
+
 // Confirm if the given error was thrown from a spawn'ed process.
 cp.isSpawnError( object? )
 

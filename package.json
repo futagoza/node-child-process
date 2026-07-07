@@ -20,7 +20,7 @@
     ],
     "scripts": {
         "bump-dry": "bump-updated --dry",
-        "bump": "bump-updated",
+        "bump": "npm run rebuild && bump-updated",
         "rebuild": "rimraf out && tsc",
         "test": "eslint"
     },

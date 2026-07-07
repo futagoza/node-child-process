@@ -18,15 +18,16 @@
         "src"
     ],
     "scripts": {
-        "lint": "eslint --ext .js,.ts .",
+        "bump-dry": "bump-updated --dry",
+        "bump": "bump-updated",
         "rebuild": "rimraf out && tsc",
-        "preversion": "npm run rebuild",
-        "postversion": "git push --follow-tags && npm publish"
+        "test": "eslint"
     },
     "devDependencies": {
         "@futagoza/eslint-config": "17.0.0",
         "@futagoza/tsconfig": "4.1.0",
         "@types/node": "20",
+        "bump-updated": "2.0.3",
         "eslint": "10.6.0",
         "rimraf": "6.1.3",
         "typescript": "6.0.3"

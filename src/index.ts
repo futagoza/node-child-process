@@ -155,7 +155,7 @@ export function create( options: ChildProcessOptions = {} ) {
 
 import { ErrorSymbol, isSpawnError } from "./isSpawnError.ts"
 
-export type * from "./types.ts"
+export type * from "../src/types.d.ts"
 export {
 
     ErrorSymbol,

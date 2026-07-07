@@ -1,5 +1,10 @@
 > See [commit history](https://github.com/futagoza/node-child-process/commits) for a full list of changes.
 
+<a name="2.0.1"></a>
+## [v2.0.1](https://github.com/futagoza/node-child-process/compare/v2.0.0...v2.0.1) (2026-07-07)
+
+* Fix types missing from exports
+
 <a name="2.0.0"></a>
 ## [v2.0.0](https://github.com/futagoza/node-child-process/compare/v1.1.0...v2.0.0) (2026-07-07)
 

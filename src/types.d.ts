@@ -244,3 +244,9 @@ export type ChildProcessOutput = {
     stdout?: string | Buffer
 
 }
+
+/**
+ * An optional callback function for `@futagoza-child-process#x()`
+ */
+
+export type XCallback<R = unknown> = ( result: ChildProcessOutput ) => R

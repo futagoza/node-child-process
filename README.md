@@ -16,13 +16,33 @@ If an array argument isn't provided, it will try `options.args` or `options.argv
 import * as cp from "@futagoza/child-process"
 
 // Spawns a new process.
-cp.spawn( command, argv?, options? )
+cp.spawn( command )
+cp.spawn( command, options )
+cp.spawn( command, argv )
+cp.spawn( command, argv, options )
+cp.spawn( options )
 
 // Spawns a shell, executing the command inside the shell and buffering any generated output.
-cp.exec( command, argv?, options? )
+cp.exec( command )
+cp.exec( command, options )
+cp.exec( command, argv )
+cp.exec( command, argv, options )
+cp.exec( options )
 
 // Same as `cp.exec`, but sends any output to the current process instead.
-cp.run( command, argv?, options? )
+cp.run( command )
+cp.run( command, options )
+cp.run( command, argv )
+cp.run( command, argv, options )
+cp.run( options )
+
+// Simple wrapper (`exec` with callback, otherwise `run`) if you don't need options
+cp.x( command )
+cp.x( command, cwd )
+cp.x( command, buffer )
+cp.x( command, buffer, cwd )
+cp.x( command, callback )
+cp.x( command, callback, cwd )
 
 // Confirm if the given error was thrown from a spawn'ed process.
 cp.isSpawnError( object? )

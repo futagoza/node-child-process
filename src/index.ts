@@ -5,6 +5,7 @@ import type {
     ChildProcessOptions,
     ChildProcessPromise,
     UnsortedArguments,
+    XCallback,
 
 } from "../src/types.d.ts"
 
@@ -19,10 +20,10 @@ import type {
  * @param options Options passed to `child_process.spawn()`.
  */
 
-export function spawn( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessPromise
-export function spawn( command: string, argv: string[] ): ChildProcessPromise
 export function spawn( command: string ): ChildProcessPromise
 export function spawn( command: string, options: ChildProcessOptions ): ChildProcessPromise
+export function spawn( command: string, argv: string[] ): ChildProcessPromise
+export function spawn( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessPromise
 export function spawn( options: ChildProcessOptions ): ChildProcessPromise
 
 export function spawn( ..._arguments: UnsortedArguments ) {
@@ -45,10 +46,10 @@ export function spawn( ..._arguments: UnsortedArguments ) {
  * @param options Options passed to `child_process.spawn()`.
  */
 
-export function exec( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessPromise
-export function exec( command: string, argv: string[] ): ChildProcessPromise
 export function exec( command: string ): ChildProcessPromise
 export function exec( command: string, options: ChildProcessOptions ): ChildProcessPromise
+export function exec( command: string, argv: string[] ): ChildProcessPromise
+export function exec( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessPromise
 export function exec( options: ChildProcessOptions ): ChildProcessPromise
 
 export function exec( ..._arguments: UnsortedArguments ) {
@@ -72,10 +73,10 @@ export function exec( ..._arguments: UnsortedArguments ) {
  * @param options Options passed to `child_process.spawn()`.
  */
 
-export function run( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessPromise
-export function run( command: string, argv: string[] ): ChildProcessPromise
 export function run( command: string ): ChildProcessPromise
 export function run( command: string, options: ChildProcessOptions ): ChildProcessPromise
+export function run( command: string, argv: string[] ): ChildProcessPromise
+export function run( command: string, argv: string[], options: ChildProcessOptions ): ChildProcessPromise
 export function run( options: ChildProcessOptions ): ChildProcessPromise
 
 export function run( ..._arguments: UnsortedArguments ) {
@@ -86,6 +87,38 @@ export function run( ..._arguments: UnsortedArguments ) {
     options.stdio = "inherit"
 
     return promise( command, argv, options )
+
+}
+
+/**
+ * A simple to use wrapper for either `exec` (with callback) or `run` (i/o piped to current process)
+ * 
+ * @param command The command to run (should contain both the executable path and arguments)
+ * @param buffer If provided will buffer stdout and stderr
+ * @param callback If provided will buffer stdout and stderr, then pass the usuall result to this function
+ * @param cwd The current working directory to call the command from (should default to `process.cwd()`)
+ */
+
+export function x( command: string ): ChildProcessPromise
+export function x( command: string, cwd: string ): ChildProcessPromise
+export function x( command: string, buffer: boolean ): ChildProcessPromise
+export function x( command: string, buffer: boolean, cwd: string ): ChildProcessPromise
+export function x<R = unknown>( command: string, callback: XCallback<R> ): Promise<R>
+export function x<R = unknown>( command: string, callback: XCallback<R>, cwd: string ): Promise<R>
+
+export function x( command: string, callback?: string | boolean | XCallback, cwd?: string ) {
+
+    if ( typeof callback === "string" ) {
+
+        cwd = callback
+        callback = void 0
+
+    }
+
+    const fn = callback ? exec : run
+    const p = fn( command, { cwd } )
+
+    return typeof callback === "function" ? p.then( callback ) : p
 
 }
 

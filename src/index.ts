@@ -6,7 +6,7 @@ import type {
     ChildProcessResult,
     UnsortedArguments,
 
-} from "./types.ts"
+} from "../src/types.d.ts"
 
 /**
  * Spawns a new process.

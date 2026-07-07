@@ -1,7 +1,4 @@
-import type {
-    ChildProcess,
-    SpawnOptions,
-} from "node:child_process"
+import { ChildProcess, SpawnOptions } from "node:child_process"
 import { ErrorSymbol } from "./isSpawnError.ts"
 
 /**

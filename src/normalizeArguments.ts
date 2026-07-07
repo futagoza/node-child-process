@@ -4,7 +4,7 @@ import type {
     NormalizedArguments,
     UnsortedArguments,
 
-} from "./types.ts"
+} from "../src/types.d.ts"
 
 /**
  * Will return a normalized set of arguments to use with `cp.promise` based on the types:

@@ -6,7 +6,7 @@ import type {
     ChildProcessResult,
     SpawnError,
 
-} from "./types.ts"
+} from "../src/types.d.ts"
 
 // Return's either a buffer or a string depending on `encoding`
 function DECODE_BUFFER( data: unknown[], encoding?: string ) {

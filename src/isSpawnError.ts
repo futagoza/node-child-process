@@ -3,7 +3,7 @@ import type {
     SpawnError,
     UnkownSpawnError,
 
-} from "./types.ts"
+} from "../src/types.d.ts"
 
 /**
  * A unique symbol for Error's from `@futagoza/child-process`

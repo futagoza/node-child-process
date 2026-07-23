@@ -19,8 +19,10 @@
         "src"
     ],
     "scripts": {
-        "bump-dry": "bump-updated --dry",
-        "bump": "npm run rebuild && bump-updated",
+        "bump:major": "bump-updated -v major",
+        "bump:minor": "bump-updated -v minor",
+        "bump:patch": "bump-updated -v patch",
+        "bump:preview": "bump-updated --debug --dry",
         "rebuild": "rimraf out && tsc",
         "test": "eslint"
     },

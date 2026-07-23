@@ -3,6 +3,7 @@
 ## unreleased
 
 * DEV: Updated devDependencies
+* Update bump scripts
 
 <a name="2.0.2"></a>
 ## [v2.0.2](https://github.com/futagoza/node-child-process/compare/v2.0.0...v2.0.2) (2026-07-07)

@@ -1,5 +1,9 @@
 > See [commit history](https://github.com/futagoza/node-child-process/commits) for a full list of changes.
 
+## unreleased
+
+* DEV: Updated devDependencies
+
 <a name="2.0.2"></a>
 ## [v2.0.2](https://github.com/futagoza/node-child-process/compare/v2.0.0...v2.0.2) (2026-07-07)
 
